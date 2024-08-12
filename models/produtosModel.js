@@ -1,7 +1,21 @@
 const pool = require("./db");
 
 const getAllProdutos = async () => {
-  const result = await pool.query("SELECT * FROM produtos");
+  const result = await pool.query(`
+    SELECT 
+      produtos.id,
+      produtos.nome,
+      produtos.marca,
+      produtos.categoria,
+      produtos.fornecedor_id,
+      produtos.picture,
+      produtos.quantidade,
+      fornecedores.nome AS fornecedor_nome
+    FROM 
+      produtos
+    JOIN 
+      fornecedores ON produtos.fornecedor_id = fornecedores.id
+  `);
   return result.rows;
 };
 
