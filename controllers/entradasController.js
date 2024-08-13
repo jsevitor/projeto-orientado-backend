@@ -24,10 +24,11 @@ const getEntradaById = async (req, res) => {
 
 const createEntrada = async (req, res) => {
   try {
-    const newEntrada = await entradasModel.createEntrada(req.body);
-    res.status(201).json(newEntrada);
+    const entrada = await entradasModel.createEntrada(req.body);
+    res.status(201).json(entrada);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error("Erro ao criar entrada:", error);
+    res.status(500).json({ message: "Erro ao criar entrada." });
   }
 };
 

@@ -14,6 +14,7 @@ const getAllProdutos = async () => {
       produtos
     JOIN 
       fornecedores ON produtos.fornecedor_id = fornecedores.id
+    ORDER BY id
   `);
   return result.rows;
 };

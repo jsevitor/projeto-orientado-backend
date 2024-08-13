@@ -1,7 +1,7 @@
 const pool = require("./db");
 
 const getAllRetiradas = async () => {
-  const result = await pool.query("SELECT * FROM retiradas");
+  const result = await pool.query("SELECT * FROM retiradas ORDER BY id");
   return result.rows;
 };
 
