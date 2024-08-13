@@ -9,7 +9,6 @@ const getAllProdutos = async () => {
       produtos.categoria,
       produtos.fornecedor_id,
       produtos.picture,
-      produtos.quantidade,
       fornecedores.nome AS fornecedor_nome
     FROM 
       produtos
@@ -25,23 +24,21 @@ const getProdutoById = async (id) => {
 };
 
 const createProduto = async (produto) => {
-  const { nome, marca, categoria, fornecedor_id, picture, quantidade } =
-    produto;
+  const { nome, marca, categoria, fornecedor_id, picture } = produto;
   const result = await pool.query(
-    `INSERT INTO produtos (nome, marca, categoria, fornecedor_id, picture, quantidade)
-     VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
-    [nome, marca, categoria, fornecedor_id, picture, quantidade]
+    `INSERT INTO produtos (nome, marca, categoria, fornecedor_id, picture)
+     VALUES ($1, $2, $3, $4, $5) RETURNING *`,
+    [nome, marca, categoria, fornecedor_id, picture]
   );
   return result.rows[0];
 };
 
 const updateProduto = async (id, produto) => {
-  const { nome, marca, categoria, fornecedor_id, picture, quantidade } =
-    produto;
+  const { nome, marca, categoria, fornecedor_id, picture } = produto;
   const result = await pool.query(
-    `UPDATE produtos SET nome = $1, marca = $2, categoria = $3, fornecedor_id = $4, picture = $5, quantidade = $6
-     WHERE id = $7 RETURNING *`,
-    [nome, marca, categoria, fornecedor_id, picture, quantidade, id]
+    `UPDATE produtos SET nome = $1, marca = $2, categoria = $3, fornecedor_id = $4, picture = $5
+     WHERE id = $6 RETURNING *`,
+    [nome, marca, categoria, fornecedor_id, picture, id]
   );
   return result.rows[0];
 };
