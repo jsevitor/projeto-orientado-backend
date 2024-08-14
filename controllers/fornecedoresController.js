@@ -1,5 +1,10 @@
 const fornecedoresModel = require("../models/fornecedoresModel");
 
+/**
+ * @description Obtém todos os fornecedores do banco de dados.
+ * @route GET /fornecedores
+ * @access Público
+ */
 const getAllFornecedores = async (req, res) => {
   try {
     const fornecedores = await fornecedoresModel.getAllFornecedores();
@@ -9,6 +14,12 @@ const getAllFornecedores = async (req, res) => {
   }
 };
 
+/**
+ * @description Obtém um fornecedor específico pelo ID.
+ * @route GET /fornecedores/:id
+ * @param {string} id - ID do fornecedor a ser buscado.
+ * @access Público
+ */
 const getFornecedorById = async (req, res) => {
   const { id } = req.params;
   try {
@@ -22,6 +33,12 @@ const getFornecedorById = async (req, res) => {
   }
 };
 
+/**
+ * @description Cria um novo fornecedor no banco de dados.
+ * @route POST /fornecedores
+ * @param {Object} req.body - Dados do novo fornecedor.
+ * @access Público
+ */
 const createFornecedor = async (req, res) => {
   try {
     const newFornecedor = await fornecedoresModel.createFornecedor(req.body);
@@ -31,6 +48,13 @@ const createFornecedor = async (req, res) => {
   }
 };
 
+/**
+ * @description Atualiza um fornecedor existente pelo ID.
+ * @route PUT /fornecedores/:id
+ * @param {string} id - ID do fornecedor a ser atualizado.
+ * @param {Object} req.body - Dados atualizados do fornecedor.
+ * @access Público
+ */
 const updateFornecedor = async (req, res) => {
   const { id } = req.params;
   try {
@@ -47,6 +71,12 @@ const updateFornecedor = async (req, res) => {
   }
 };
 
+/**
+ * @description Exclui um fornecedor pelo ID.
+ * @route DELETE /fornecedores/:id
+ * @param {string} id - ID do fornecedor a ser excluído.
+ * @access Público
+ */
 const deleteFornecedor = async (req, res) => {
   const { id } = req.params;
   try {

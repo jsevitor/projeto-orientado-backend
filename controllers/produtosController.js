@@ -1,5 +1,10 @@
 const produtoModel = require("../models/produtosModel");
 
+/**
+ * @description Obtém todos os produtos do banco de dados.
+ * @route GET /produtos
+ * @access Público
+ */
 const getAllProdutos = async (req, res) => {
   try {
     const produtos = await produtoModel.getAllProdutos();
@@ -9,6 +14,12 @@ const getAllProdutos = async (req, res) => {
   }
 };
 
+/**
+ * @description Obtém um produto específico pelo ID.
+ * @route GET /produtos/:id
+ * @param {string} id - ID do produto a ser buscado.
+ * @access Público
+ */
 const getProdutoById = async (req, res) => {
   const { id } = req.params;
   try {
@@ -23,6 +34,12 @@ const getProdutoById = async (req, res) => {
   }
 };
 
+/**
+ * @description Cria um novo produto no banco de dados.
+ * @route POST /produtos
+ * @param {Object} req.body - Dados do novo produto.
+ * @access Público
+ */
 const createProduto = async (req, res) => {
   const produto = req.body;
   try {
@@ -33,6 +50,13 @@ const createProduto = async (req, res) => {
   }
 };
 
+/**
+ * @description Atualiza um produto existente pelo ID.
+ * @route PUT /produtos/:id
+ * @param {string} id - ID do produto a ser atualizado.
+ * @param {Object} req.body - Dados atualizados do produto.
+ * @access Público
+ */
 const updateProduto = async (req, res) => {
   const { id } = req.params;
   const produto = req.body;
@@ -44,6 +68,12 @@ const updateProduto = async (req, res) => {
   }
 };
 
+/**
+ * @description Exclui um produto pelo ID.
+ * @route DELETE /produtos/:id
+ * @param {string} id - ID do produto a ser excluído.
+ * @access Público
+ */
 const deleteProduto = async (req, res) => {
   const { id } = req.params;
   try {

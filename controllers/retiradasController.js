@@ -1,5 +1,10 @@
 const retiradasModel = require("../models/retiradasModel");
 
+/**
+ * @description Obtém todas as retiradas do banco de dados.
+ * @route GET /retiradas
+ * @access Público
+ */
 const getAllRetiradas = async (req, res) => {
   try {
     const retiradas = await retiradasModel.getAllRetiradas();
@@ -9,6 +14,12 @@ const getAllRetiradas = async (req, res) => {
   }
 };
 
+/**
+ * @description Obtém uma retirada específica pelo ID.
+ * @route GET /retiradas/:id
+ * @param {string} id - ID da retirada a ser buscada.
+ * @access Público
+ */
 const getRetiradaById = async (req, res) => {
   const { id } = req.params;
   try {
@@ -22,6 +33,12 @@ const getRetiradaById = async (req, res) => {
   }
 };
 
+/**
+ * @description Cria uma nova retirada no banco de dados.
+ * @route POST /retiradas
+ * @param {Object} req.body - Dados da nova retirada.
+ * @access Público
+ */
 const createRetirada = async (req, res) => {
   try {
     const newRetirada = await retiradasModel.createRetirada(req.body);
@@ -35,6 +52,13 @@ const createRetirada = async (req, res) => {
   }
 };
 
+/**
+ * @description Atualiza uma retirada existente pelo ID.
+ * @route PUT /retiradas/:id
+ * @param {string} id - ID da retirada a ser atualizada.
+ * @param {Object} req.body - Dados atualizados da retirada.
+ * @access Público
+ */
 const updateRetirada = async (req, res) => {
   const { id } = req.params;
   try {
@@ -48,6 +72,12 @@ const updateRetirada = async (req, res) => {
   }
 };
 
+/**
+ * @description Exclui uma retirada pelo ID.
+ * @route DELETE /retiradas/:id
+ * @param {string} id - ID da retirada a ser excluída.
+ * @access Público
+ */
 const deleteRetirada = async (req, res) => {
   const { id } = req.params;
   try {

@@ -1,6 +1,16 @@
-// retiradasModel.js
 const pool = require("./db");
 
+/**
+ * @description Retorna todas as retiradas com informações do produto associado.
+ * @returns {Promise<Array>} Uma lista de retiradas com as seguintes propriedades:
+ * - `id`: Identificador único da retirada.
+ * - `produto_id`: Identificador do produto retirado.
+ * - `produto_nome`: Nome do produto retirado.
+ * - `quantidade`: Quantidade do produto retirada.
+ * - `tipo_retirada`: Tipo da retirada.
+ * - `data_retirada`: Data em que a retirada foi realizada.
+ * - `numero_lote`: Número do lote da retirada.
+ */
 const getAllRetiradas = async () => {
   const result = await pool.query(`
     SELECT 
@@ -20,6 +30,18 @@ const getAllRetiradas = async () => {
   return result.rows;
 };
 
+/**
+ * @description Retorna uma retirada específica pelo seu ID.
+ * @param {number} id - O ID da retirada a ser buscada.
+ * @returns {Promise<Object>} A retirada com as seguintes propriedades:
+ * - `id`: Identificador único da retirada.
+ * - `produto_id`: Identificador do produto retirado.
+ * - `produto_nome`: Nome do produto retirado.
+ * - `quantidade`: Quantidade do produto retirada.
+ * - `tipo_retirada`: Tipo da retirada.
+ * - `data_retirada`: Data em que a retirada foi realizada.
+ * - `numero_lote`: Número do lote da retirada.
+ */
 const getRetiradaById = async (id) => {
   const result = await pool.query(
     `
@@ -42,6 +64,17 @@ const getRetiradaById = async (id) => {
   return result.rows[0];
 };
 
+/**
+ * @description Cria uma nova retirada no banco de dados.
+ * @param {Object} retirada - A retirada a ser criada com as seguintes propriedades:
+ * - `produto_id`: Identificador do produto retirado.
+ * - `quantidade`: Quantidade do produto retirada.
+ * - `tipo_retirada`: Tipo da retirada.
+ * - `data_retirada`: Data em que a retirada foi realizada.
+ * - `numero_lote`: Número do lote da retirada.
+ * @returns {Promise<Object>} A retirada criada com as propriedades descritas.
+ * @throws {Error} Se o estoque do produto for insuficiente para a retirada.
+ */
 const createRetirada = async (retirada) => {
   const { produto_id, quantidade, tipo_retirada, data_retirada, numero_lote } =
     retirada;
@@ -70,6 +103,17 @@ const createRetirada = async (retirada) => {
   return result.rows[0];
 };
 
+/**
+ * @description Atualiza uma retirada existente pelo seu ID.
+ * @param {number} id - O ID da retirada a ser atualizada.
+ * @param {Object} retirada - A retirada atualizada com as seguintes propriedades:
+ * - `produto_id`: Identificador do produto retirado.
+ * - `quantidade`: Quantidade do produto retirada.
+ * - `tipo_retirada`: Tipo da retirada.
+ * - `data_retirada`: Data em que a retirada foi realizada.
+ * - `numero_lote`: Número do lote da retirada.
+ * @returns {Promise<Object>} A retirada atualizada com as propriedades descritas.
+ */
 const updateRetirada = async (id, retirada) => {
   const { produto_id, quantidade, tipo_retirada, data_retirada, numero_lote } =
     retirada;
@@ -88,6 +132,11 @@ const updateRetirada = async (id, retirada) => {
   return result.rows[0];
 };
 
+/**
+ * @description Deleta uma retirada pelo seu ID.
+ * @param {number} id - O ID da retirada a ser deletada.
+ * @returns {Promise<void>} Nada é retornado.
+ */
 const deleteRetirada = async (id) => {
   // Recupera a retirada antes de deletar para atualizar o estoque
   const retirada = await getRetiradaById(id);

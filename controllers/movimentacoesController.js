@@ -1,5 +1,10 @@
 const movimentacoesModel = require("../models/movimentacoesModel");
 
+/**
+ * @description Obtém todas as movimentações do banco de dados.
+ * @route GET /movimentacoes
+ * @access Público
+ */
 const getAllMovimentacoes = async (req, res) => {
   try {
     const entradas = await movimentacoesModel.getAllMovimentacoes();
