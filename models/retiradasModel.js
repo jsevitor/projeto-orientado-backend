@@ -46,14 +46,14 @@ const createRetirada = async (retirada) => {
   const { produto_id, quantidade, tipo_retirada, data_retirada, numero_lote } =
     retirada;
 
-  // Verifica se o estoque é suficiente antes de criar a retirada
-  const produto = await pool.query(
-    "SELECT quantidade FROM produtos WHERE id = $1",
-    [produto_id]
-  );
-  if (produto.rows.length === 0 || produto.rows[0].quantidade < quantidade) {
-    throw new Error("Estoque insuficiente para a retirada");
-  }
+  // // Verifica se o estoque é suficiente antes de criar a retirada
+  // const produto = await pool.query(
+  //   "SELECT quantidade FROM produtos WHERE id = $1",
+  //   [produto_id]
+  // );
+  // if (produto.rows.length === 0 || produto.rows[0].quantidade < quantidade) {
+  //   throw new Error("Estoque insuficiente para a retirada");
+  // }
 
   const result = await pool.query(
     `INSERT INTO retiradas (produto_id, quantidade, tipo_retirada, data_retirada, numero_lote)

@@ -4,6 +4,7 @@ const fornecedoresController = require("./controllers/fornecedoresController");
 const produtosController = require("./controllers/produtosController");
 const entradasController = require("./controllers/entradasController");
 const retiradasController = require("./controllers/retiradasController");
+const movimentacoesController = require("./controllers/movimentacoesController");
 
 const app = express();
 const port = process.env.PORT || 3001;
@@ -38,6 +39,9 @@ app.get("/retiradas/:id", retiradasController.getRetiradaById);
 app.post("/retiradas", retiradasController.createRetirada);
 app.put("/retiradas/:id", retiradasController.updateRetirada);
 app.delete("/retiradas/:id", retiradasController.deleteRetirada);
+
+// Rotas para Movimentações
+app.get("/movimentacoes", movimentacoesController.getAllMovimentacoes);
 
 // Inicia o servidor
 app.listen(port, () => {
