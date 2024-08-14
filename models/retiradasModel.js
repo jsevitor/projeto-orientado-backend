@@ -1,14 +1,44 @@
+// retiradasModel.js
 const pool = require("./db");
 
 const getAllRetiradas = async () => {
-  const result = await pool.query("SELECT * FROM retiradas ORDER BY id");
+  const result = await pool.query(`
+    SELECT 
+      retiradas.id,
+      retiradas.produto_id,
+      produtos.nome AS produto_nome,
+      retiradas.quantidade,
+      retiradas.tipo_retirada,
+      retiradas.data_retirada,
+      retiradas.numero_lote
+    FROM 
+      retiradas
+    JOIN 
+      produtos ON retiradas.produto_id = produtos.id
+    ORDER BY retiradas.id
+  `);
   return result.rows;
 };
 
 const getRetiradaById = async (id) => {
-  const result = await pool.query("SELECT * FROM retiradas WHERE id = $1", [
-    id,
-  ]);
+  const result = await pool.query(
+    `
+    SELECT 
+      retiradas.id,
+      retiradas.produto_id,
+      produtos.nome AS produto_nome,
+      retiradas.quantidade,
+      retiradas.tipo_retirada,
+      retiradas.data_retirada,
+      retiradas.numero_lote
+    FROM 
+      retiradas
+    JOIN 
+      produtos ON retiradas.produto_id = produtos.id
+    WHERE retiradas.id = $1
+  `,
+    [id]
+  );
   return result.rows[0];
 };
 
@@ -32,10 +62,10 @@ const createRetirada = async (retirada) => {
   );
 
   // Atualiza o estoque do produto
-  await pool.query(
-    "UPDATE produtos SET quantidade = quantidade - $1 WHERE id = $2",
-    [quantidade, produto_id]
-  );
+  // await pool.query(
+  //   "UPDATE produtos SET quantidade = quantidade - $1 WHERE id = $2",
+  //   [quantidade, produto_id]
+  // );
 
   return result.rows[0];
 };
@@ -48,11 +78,28 @@ const updateRetirada = async (id, retirada) => {
      WHERE id = $6 RETURNING *`,
     [produto_id, quantidade, tipo_retirada, data_retirada, numero_lote, id]
   );
+
+  // Atualiza o estoque do produto se a quantidade for alterada
+  // await pool.query(
+  //   "UPDATE produtos SET quantidade = quantidade - $1 WHERE id = $2",
+  //   [quantidade, produto_id]
+  // );
+
   return result.rows[0];
 };
 
 const deleteRetirada = async (id) => {
+  // Recupera a retirada antes de deletar para atualizar o estoque
+  const retirada = await getRetiradaById(id);
+
+  // Deleta a retirada
   await pool.query("DELETE FROM retiradas WHERE id = $1", [id]);
+
+  // Atualiza o estoque do produto
+  // await pool.query(
+  //   "UPDATE produtos SET quantidade = quantidade + $1 WHERE id = $2",
+  //   [retirada.quantidade, retirada.produto_id]
+  // );
 };
 
 module.exports = {
