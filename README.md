@@ -69,4 +69,4 @@ Este projeto está sob a licença MIT - veja o arquivo [LICENSE](LICENSE.md) par
 
 ### 🎁 Expressões de gratidão
 
-- Agradecimentos especiais aos a meus colegas de equipe e meu professor que auxiliaram o desenvolvimento deste projeto. 🙌
+- Agradecimentos especiais aos colegas de equipe e ao professor que auxiliaram no desenvolvimento deste projeto. 🙌
